@@ -1,19 +1,23 @@
 import random
 import time
-import keyboard
 from gtts import gTTS
 import os
 
 notes = ["Ab","A","A#","Bb","B","C","C#","Db","D","D#","Eb","E","F","F#","Gb","G", "G#"]
-value = len(notes)
-count = 0
 prev = 0
 rand = 0
 
 while True:
 
+    if len(notes) == 0:
+        stat = int(input("Congratulations! You've found every note! Enter 1 to continue practicing, 0 to exit."))
+        if stat == 0:
+            break
+        else:
+            notes = ["Ab","A","A#","Bb","B","C","C#","Db","D","D#","Eb","E","F","F#","Gb","G", "G#"]
+
     while prev == rand:
-        rand = random.randint(1,value-1)
+        rand = random.randint(0, len(notes)-1)
     prev = rand
     mytext = notes[rand]
     print(f"{mytext}")
@@ -22,10 +26,13 @@ while True:
     tts.save("tts.mp3")
 
     os.system("start tts.mp3")
-    time.sleep(2)
-    count+=1
+    time.sleep(0.2)
 
-    if keyboard.is_pressed("enter"):
-        print(f"You practiced {count} times")
-        time.sleep(10)
-        break
+    for x in range(len(notes)):
+        if notes[x] == mytext:
+            notes.remove(mytext)
+            break
+    print(notes)
+    
+
+    
